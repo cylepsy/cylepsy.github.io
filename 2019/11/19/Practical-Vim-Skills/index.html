@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Practical Vim Skills | Cylepsy&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="The contents of this article are noted from this video.  I love Vim because I’ve yet to hit the ceiling.  Text ObjectsText objects allow you to operate from anywhere within a defined body of texts.  i">
+<meta name="keywords" content="Vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Practical Vim Skills">
+<meta property="og:url" content="https:&#x2F;&#x2F;cylepsy.github.io&#x2F;2019&#x2F;11&#x2F;19&#x2F;Practical-Vim-Skills&#x2F;index.html">
+<meta property="og:site_name" content="Cylepsy&#39;s blog">
+<meta property="og:description" content="The contents of this article are noted from this video.  I love Vim because I’ve yet to hit the ceiling.  Text ObjectsText objects allow you to operate from anywhere within a defined body of texts.  i">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-20T12:51:59.281Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Cylepsy&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Cylepsy&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cylepsy.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Practical-Vim-Skills" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/19/Practical-Vim-Skills/" class="article-date">
+  <time datetime="2019-11-18T16:32:01.000Z" itemprop="datePublished">2019-11-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Practical Vim Skills
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The contents of this article are noted from <a href="https://www.youtube.com/watch?v=wlR5gYd6um0&t=603s" target="_blank" rel="noopener">this video</a>.</p>
+<blockquote>
+<p>I <em>love</em> Vim because I’ve yet to hit the ceiling.</p>
+</blockquote>
+<h2 id="Text-Objects"><a href="#Text-Objects" class="headerlink" title="Text Objects"></a>Text Objects</h2><p>Text objects allow you to operate from anywhere within a <strong>defined body of texts</strong>.</p>
+<ul>
+<li><strong>iw</strong> =&gt; <em>“inner word”</em> (works form anywhere in a word)</li>
+<li><strong>it</strong> =&gt; <em>“inner tag”</em> (the contents of an HTML tag)</li>
+<li><strong>i”</strong> =&gt; <em>“inner quotes”</em></li>
+<li><strong>ip</strong> =&gt; <em>“inner paragraph”</em></li>
+<li><strong>as</strong> =&gt; <em>“a sentence”</em></li>
+</ul>
+<h2 id="Parameterized-Text-Objects"><a href="#Parameterized-Text-Objects" class="headerlink" title="Parameterized Text Objects"></a>Parameterized Text Objects</h2><ul>
+<li><strong>f,F</strong> =&gt; <em>“find”</em> the next character</li>
+<li><strong>t,T</strong> =&gt; <em>“find”</em> the next character (up to but <strong>not included</strong>)</li>
+<li><strong>/</strong> =&gt; <em>search</em> (up to the next match)</li>
+</ul>
+<h3 id="Example-‘-’-indicates-the-cursor"><a href="#Example-‘-’-indicates-the-cursor" class="headerlink" title="Example (‘|’ indicates the cursor)"></a>Example (‘|’ indicates the cursor)</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"users"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>|Users List<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Chris<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Ben<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Joe<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>How to change the contents before <em>‘List’</em>?</p>
+<blockquote>
+<p>Use <code>ctL</code> to change up to <em>‘List’</em></p>
+</blockquote>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Repeat-Change"><a href="#Repeat-Change" class="headerlink" title="Repeat Change"></a>Repeat Change</h3><p>Using the <strong>dot (.)</strong> to repeat the last <em>change</em> (motion).</p>
+<h3 id="Relative-Number"><a href="#Relative-Number" class="headerlink" title="Relative Number"></a>Relative Number</h3><p>Turn on relative line numbers for easiear life.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set relativenumber</span><br></pre></td></tr></table></figure>
+
+<h3 id="Visual-Mode"><a href="#Visual-Mode" class="headerlink" title="Visual-Mode"></a>Visual-Mode</h3><p>Try <strong>not</strong> to use Visual-Mode and think if there’s a better way.</p>
+<p>(tbc in 24.19)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cylepsy.github.io/2019/11/19/Practical-Vim-Skills/" data-id="ck37apxwn00000iu6cbhw6h1z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vim/" rel="tag">Vim</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/" rel="tag">Vim</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Vim/" style="font-size: 10px;">Vim</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/19/Practical-Vim-Skills/">Practical Vim Skills</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Cylepsy<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
