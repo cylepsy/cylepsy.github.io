@@ -1,7 +1,9 @@
 ---
 title: Insights of Function Objects in JavaScripts
 date: 2019-11-20 22:19:36
-tags: JavaScript
+tags:
+  - JavaScript
+  - Function Object
 ---
 
 ## Names and Unnamed Function objects

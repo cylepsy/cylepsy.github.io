@@ -1,6 +1,14 @@
-# yaml
+---
+title: YAML this and that
+date: 2019-11-22 02:22:57
+tags:
+  - YAML
+  - Markup Language
+---
 
 > YAML Ain't Markup Language
+
+[Credits](https://www.ruanyifeng.com/blog/2016/07/yaml.html)
 
 There are lots of reason to learn about using YAML. ~~Like editing the config file of this blog.~~
 
@@ -79,3 +87,17 @@ Equivalent in JS:
 ```JavaScript
 { animal: ['Cat', 'Dog']}
 ```
+
+### Scalars
+
+Scalars are basic, unseperatable values:
+
+- Strings
+- Booleans
+- Integers
+- Floats
+- Null
+- Time
+- Date
+
+(tbc. in Strings)
