@@ -100,4 +100,37 @@ Scalars are basic, unseperatable values:
 - Time
 - Date
 
-(tbc. in Strings)
+### Strings
+
+Quotes are not used by default.
+
+```yaml
+str: This is a string.
+```
+
+Equivalent in JavaScript:
+
+```JavaScript
+{str: 'This is a string.'}
+```
+
+But if the sting contains spaces or any special symbols, then put them in a quote:
+
+```yaml
+str: 'contents: string'
+```
+
+Strings can be splited into multiple lines. There must be an indentation from the second line.
+
+```yaml
+str: this is a 
+  multiple
+  line
+  string.
+```
+
+Equivalent in JavaScript:
+
+```JavaScript
+{str: 'this is a  multiple  line  string.'}
+```
