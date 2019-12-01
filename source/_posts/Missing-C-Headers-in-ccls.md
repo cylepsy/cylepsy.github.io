@@ -1,6 +1,6 @@
 ---
 title: Fixing Missing C Headers in ccls on macOS
-date: 2019-12-01 01:24:11
+date: 2019-12-01 22:45:32
 tags:
 ---
 
@@ -43,7 +43,7 @@ Meanwhile at the top of the file:
 
 Strangely, my Apple Clang compiler worked just fine. After researching I found that C headers in Mac OS Mojave has been moved to a different directory. I tried to install the header SDK after making sure I've installed the command line tool, and ...
 
-![error](./images/error.png)
+{% asset_img "error.png" "The installation error"%}
 
 Now the nightmare begins. There were so many posts on the internet about fixing this kind of issues, like [this one](https://github.com/MaskRay/ccls/issues/191) or [this one](https://github.com/frida/frida/issues/338).
 
@@ -73,4 +73,4 @@ To me it seemed like a repeated inclusion issue. In the end I manually located t
 
 After deleting everything except this line, ccls finally loaded `stdio.h`, and other STLs.
 
-![final](./images/final.png)
+{% asset_img "final.png" "The final output."%}
