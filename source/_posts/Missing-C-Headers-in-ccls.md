@@ -2,6 +2,10 @@
 title: Fixing Missing C Headers in ccls on macOS
 date: 2019-12-01 22:45:32
 tags:
+  - C
+  - Language Server
+  - ccls
+  - coc.nvim
 ---
 
 Recently I switched from _Vim_ to _NeoVim_ because some people keep telling me that Vim is bloated and yadayada.
