@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://cylepsy.github.io').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Recently I switched from Vim to NeoVim because some people keep telling me that Vim is bloated and yadayada.Even though the latest version of Vim 8 has been developed with a bunch of new features, I w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fixing Missing C Headers in ccls on macOS">
+<meta property="og:url" content="https:&#x2F;&#x2F;cylepsy.github.io&#x2F;2019&#x2F;12&#x2F;01&#x2F;Missing-C-Headers-in-ccls&#x2F;index.html">
+<meta property="og:site_name" content="Cylepsy&#39;s blog">
+<meta property="og:description" content="Recently I switched from Vim to NeoVim because some people keep telling me that Vim is bloated and yadayada.Even though the latest version of Vim 8 has been developed with a bunch of new features, I w">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https:&#x2F;&#x2F;cylepsy.github.io&#x2F;2019&#x2F;12&#x2F;01&#x2F;Missing-C-Headers-in-ccls&#x2F;error.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cylepsy.github.io&#x2F;2019&#x2F;12&#x2F;01&#x2F;Missing-C-Headers-in-ccls&#x2F;final.png">
+<meta property="article:published_time" content="2019-12-01T13:45:32.000Z">
+<meta property="article:modified_time" content="2019-12-15T10:51:45.641Z">
+<meta property="article:author" content="Cylepsy">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="Language Server">
+<meta property="article:tag" content="ccls">
+<meta property="article:tag" content="coc.nvim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;cylepsy.github.io&#x2F;2019&#x2F;12&#x2F;01&#x2F;Missing-C-Headers-in-ccls&#x2F;error.png">
+
+<link rel="canonical" href="https://cylepsy.github.io/2019/12/01/Missing-C-Headers-in-ccls/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Fixing Missing C Headers in ccls on macOS | Cylepsy's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cylepsy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/12/01/Missing-C-Headers-in-ccls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cylepsy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cylepsy's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fixing Missing C Headers in ccls on macOS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-01 22:45:32" itemprop="dateCreated datePublished" datetime="2019-12-01T22:45:32+09:00">2019-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-15 19:51:45" itemprop="dateModified" datetime="2019-12-15T19:51:45+09:00">2019-12-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Recently I switched from <em>Vim</em> to <em>NeoVim</em> because some people keep telling me that Vim is bloated and yadayada.<br>Even though the latest version of Vim 8 has been developed with a bunch of new features, I was still attempted to switch to NeoVim.</p>
+<h2 id="Conquer-of-Complete"><a href="#Conquer-of-Complete" class="headerlink" title="Conquer of Complete"></a>Conquer of Complete</h2><p>The first plug-in I came across was <a href="https://github.com/neoclide/coc.nvim" target="_blank" rel="noopener">nvimcoc</a>, or a.k.a. <strong>Conquer of Complete</strong>.<br>It is an intelliSense engine for Vim 8 and NeoVim, which can work as a Language server client.<br>In a word, it makes your Vim more VS Code-ish.</p>
+<h2 id="ccls"><a href="#ccls" class="headerlink" title="ccls"></a>ccls</h2><p>And ccls is a language server for linting C-Family codes.<br>Since I’m currently trying to relearn everything in a old school C99 way, thanks to <a href="https://www.youtube.com/watch?v=Tm2sxwrZFiU" target="_blank" rel="noopener">Nick Walton</a>, I decided to try out ccls as my first language server.<br><del>(Well, technically no, because we’ve all used VS Code.)</del></p>
+<p>Anyway, I installed ccls via Homebrew, and tried to use it to lint a dummy C program. Everything seemed OK until something really strange went on.</p>
+<p><strong>ccls won’t load my c headers!</strong></p>
+<p>At first I found this when I got an error on <em>printf</em>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">printf</span>(<span class="string">"this shit!"</span>);</span><br><span class="line">^</span><br></pre></td></tr></table></figure>
+
+<p><code>[ccls 2] [W] implicitly declaring library function &#39;printf&#39; with type &#39;int (const char *, ...)&#39;</code></p>
+<p>Meanwhile at the top of the file:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">          ^</span><br></pre></td></tr></table></figure>
+
+<p><code>[ccls 1] [E] &#39;stdio.h&#39; file not found</code></p>
+<p>Strangely, my Apple Clang compiler worked just fine. After researching I found that C headers in Mac OS Mojave has been moved to a different directory. I tried to install the header SDK after making sure I’ve installed the command line tool, and …</p>
+<img src="/2019/12/01/Missing-C-Headers-in-ccls/error.png" class="" title="The installation error">
+
+<p>Now the nightmare begins. There were so many posts on the internet about fixing this kind of issues, like <a href="https://github.com/MaskRay/ccls/issues/191" target="_blank" rel="noopener">this one</a> or <a href="https://github.com/frida/frida/issues/338" target="_blank" rel="noopener">this one</a>.</p>
+<p>Obviously, none of those worked for me.</p>
+<h2 id="The-Actual-fix"><a href="#The-Actual-fix" class="headerlink" title="The Actual fix"></a>The Actual fix</h2><p>Finally I found <a href="https://ianding.io/2019/07/29/configure-coc-nvim-for-c-c++-development/" target="_blank" rel="noopener">this article</a>, in which the author also suffered from the same issues.</p>
+<blockquote>
+<p>If you are using macOS, then chances are ccls cannot find system headers and as a result reports a bunch of errors.<br>This is because new macOS systems moves system headers into the macOS SDK directory and no longer places them in /usr/include. And the reason why ccls can find the system headers previously is that /usr/include is hard-coded into ccls during compilation. But now, since the macOS SDK path is not hard-coded, it cannot find them any more.</p>
+</blockquote>
+<p>By using the command <code>g++ -E -x c++ - -v &lt; /dev/null</code> I was able to get a list of include paths.<br>In my case it is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;include&#x2F;c++&#x2F;v1</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;lib&#x2F;clang&#x2F;10.0.1&#x2F;include</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;include</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;SDKs&#x2F;MacOSX10.14.sdk&#x2F;usr&#x2F;include</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;SDKs&#x2F;MacOSX10.14.sdk&#x2F;System&#x2F;Library&#x2F;Frameworks</span><br></pre></td></tr></table></figure>
+
+<p>By adding them to the .ccls file, the problem seemed to be partly solved by this. While the error still occurs.</p>
+<p>To me it seemed like a repeated inclusion issue. In the end I manually located the path of <code>stdio.h</code>, which in my case is <code>/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include</code>.</p>
+<p>After deleting everything except this line, ccls finally loaded <code>stdio.h</code>, and other STLs.</p>
+<img src="/2019/12/01/Missing-C-Headers-in-ccls/final.png" class="" title="The final output.">
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C</a>
+              <a href="/tags/Language-Server/" rel="tag"># Language Server</a>
+              <a href="/tags/ccls/" rel="tag"># ccls</a>
+              <a href="/tags/coc-nvim/" rel="tag"># coc.nvim</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/22/YAML-this-and-that/" rel="prev" title="YAML this and that">
+      <i class="fa fa-chevron-left"></i> YAML this and that
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/02/problems-while-installing-arch/" rel="next" title="Problems While Installing Arch Linux on VM">
+      Problems While Installing Arch Linux on VM <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conquer-of-Complete"><span class="nav-number">1.</span> <span class="nav-text">Conquer of Complete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ccls"><span class="nav-number">2.</span> <span class="nav-text">ccls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Actual-fix"><span class="nav-number">3.</span> <span class="nav-text">The Actual fix</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cylepsy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cylepsy</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
