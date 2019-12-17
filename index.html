@@ -134,6 +134,16 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
@@ -168,7 +178,7 @@
     <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/12/15/tables-and-meta-tables-in-lua/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar2.png">
       <meta itemprop="name" content="Cylepsy">
       <meta itemprop="description" content="">
     </span>
@@ -237,7 +247,7 @@
     <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/12/02/problems-while-installing-arch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar2.png">
       <meta itemprop="name" content="Cylepsy">
       <meta itemprop="description" content="">
     </span>
@@ -316,7 +326,7 @@
     <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/12/01/Missing-C-Headers-in-ccls/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar2.png">
       <meta itemprop="name" content="Cylepsy">
       <meta itemprop="description" content="">
     </span>
@@ -344,7 +354,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-15 19:51:45" itemprop="dateModified" datetime="2019-12-15T19:51:45+09:00">2019-12-15</time>
+                <time title="Modified: 2019-12-17 15:01:49" itemprop="dateModified" datetime="2019-12-17T15:01:49+09:00">2019-12-17</time>
               </span>
 
           
@@ -360,34 +370,14 @@
       
           <p>Recently I switched from <em>Vim</em> to <em>NeoVim</em> because some people keep telling me that Vim is bloated and yadayada.<br>Even though the latest version of Vim 8 has been developed with a bunch of new features, I was still attempted to switch to NeoVim.</p>
 <h2 id="Conquer-of-Complete"><a href="#Conquer-of-Complete" class="headerlink" title="Conquer of Complete"></a>Conquer of Complete</h2><p>The first plug-in I came across was <a href="https://github.com/neoclide/coc.nvim" target="_blank" rel="noopener">nvimcoc</a>, or a.k.a. <strong>Conquer of Complete</strong>.<br>It is an intelliSense engine for Vim 8 and NeoVim, which can work as a Language server client.<br>In a word, it makes your Vim more VS Code-ish.</p>
-<h2 id="ccls"><a href="#ccls" class="headerlink" title="ccls"></a>ccls</h2><p>And ccls is a language server for linting C-Family codes.<br>Since I’m currently trying to relearn everything in a old school C99 way, thanks to <a href="https://www.youtube.com/watch?v=Tm2sxwrZFiU" target="_blank" rel="noopener">Nick Walton</a>, I decided to try out ccls as my first language server.<br><del>(Well, technically no, because we’ve all used VS Code.)</del></p>
-<p>Anyway, I installed ccls via Homebrew, and tried to use it to lint a dummy C program. Everything seemed OK until something really strange went on.</p>
-<p><strong>ccls won’t load my c headers!</strong></p>
-<p>At first I found this when I got an error on <em>printf</em>:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">printf</span>(<span class="string">"this shit!"</span>);</span><br><span class="line">^</span><br></pre></td></tr></table></figure>
-
-<p><code>[ccls 2] [W] implicitly declaring library function &#39;printf&#39; with type &#39;int (const char *, ...)&#39;</code></p>
-<p>Meanwhile at the top of the file:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">          ^</span><br></pre></td></tr></table></figure>
-
-<p><code>[ccls 1] [E] &#39;stdio.h&#39; file not found</code></p>
-<p>Strangely, my Apple Clang compiler worked just fine. After researching I found that C headers in Mac OS Mojave has been moved to a different directory. I tried to install the header SDK after making sure I’ve installed the command line tool, and …</p>
-<img src="/2019/12/01/Missing-C-Headers-in-ccls/error.png" class="" title="The installation error">
-
-<p>Now the nightmare begins. There were so many posts on the internet about fixing this kind of issues, like <a href="https://github.com/MaskRay/ccls/issues/191" target="_blank" rel="noopener">this one</a> or <a href="https://github.com/frida/frida/issues/338" target="_blank" rel="noopener">this one</a>.</p>
-<p>Obviously, none of those worked for me.</p>
-<h2 id="The-Actual-fix"><a href="#The-Actual-fix" class="headerlink" title="The Actual fix"></a>The Actual fix</h2><p>Finally I found <a href="https://ianding.io/2019/07/29/configure-coc-nvim-for-c-c++-development/" target="_blank" rel="noopener">this article</a>, in which the author also suffered from the same issues.</p>
-<blockquote>
-<p>If you are using macOS, then chances are ccls cannot find system headers and as a result reports a bunch of errors.<br>This is because new macOS systems moves system headers into the macOS SDK directory and no longer places them in /usr/include. And the reason why ccls can find the system headers previously is that /usr/include is hard-coded into ccls during compilation. But now, since the macOS SDK path is not hard-coded, it cannot find them any more.</p>
-</blockquote>
-<p>By using the command <code>g++ -E -x c++ - -v &lt; /dev/null</code> I was able to get a list of include paths.<br>In my case it is:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;include&#x2F;c++&#x2F;v1</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;lib&#x2F;clang&#x2F;10.0.1&#x2F;include</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;usr&#x2F;include</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;SDKs&#x2F;MacOSX10.14.sdk&#x2F;usr&#x2F;include</span><br><span class="line">&#x2F;Library&#x2F;Developer&#x2F;CommandLineTools&#x2F;SDKs&#x2F;MacOSX10.14.sdk&#x2F;System&#x2F;Library&#x2F;Frameworks</span><br></pre></td></tr></table></figure>
-
-<p>By adding them to the .ccls file, the problem seemed to be partly solved by this. While the error still occurs.</p>
-<p>To me it seemed like a repeated inclusion issue. In the end I manually located the path of <code>stdio.h</code>, which in my case is <code>/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include</code>.</p>
-<p>After deleting everything except this line, ccls finally loaded <code>stdio.h</code>, and other STLs.</p>
-<img src="/2019/12/01/Missing-C-Headers-in-ccls/final.png" class="" title="The final output.">
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/01/Missing-C-Headers-in-ccls/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -409,7 +399,7 @@
     <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/11/22/YAML-this-and-that/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar2.png">
       <meta itemprop="name" content="Cylepsy">
       <meta itemprop="description" content="">
     </span>
@@ -437,7 +427,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-15 19:51:45" itemprop="dateModified" datetime="2019-12-15T19:51:45+09:00">2019-12-15</time>
+                <time title="Modified: 2019-12-17 15:02:27" itemprop="dateModified" datetime="2019-12-17T15:02:27+09:00">2019-12-17</time>
               </span>
 
           
@@ -456,67 +446,14 @@
 </blockquote>
 <p><a href="https://www.ruanyifeng.com/blog/2016/07/yaml.html" target="_blank" rel="noopener">Credits</a></p>
 <p>There are lots of reason to learn about using YAML. <del>Like editing the config file of this blog.</del></p>
-<h2 id="Basic-Syntax"><a href="#Basic-Syntax" class="headerlink" title="Basic Syntax"></a>Basic Syntax</h2><p>There are three types of data structures in YAML:</p>
-<ul>
-<li><strong>Dictionaries</strong>: Key/value pairs.</li>
-<li><strong>Arrays/list</strong> A sequence of values.</li>
-<li><strong>Scalars</strong> : Atomic values.</li>
-</ul>
-<h3 id="Dictionaries"><a href="#Dictionaries" class="headerlink" title="Dictionaries"></a>Dictionaries</h3><p>Use <strong>conlon+space</strong> for a key/value pair.</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">animal:</span> <span class="string">pets</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JS:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">animal</span>: <span class="string">'pets'</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Another style in YAML:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hash:</span> <span class="string">&#123;</span> <span class="attr">name:</span> <span class="string">Steve,</span> <span class="attr">foo:</span> <span class="string">bar</span> <span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JS:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">hash</span>: &#123; <span class="attr">name</span>: <span class="string">'Steve'</span>, <span class="attr">foo</span>:<span class="string">'bar'</span> &#125; &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h3><p>A list of words start with hyphen and space form an array</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">cat</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JS:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">'Cat'</span>, <span class="string">'Dog'</span>, <span class="string">'Goldfish'</span> ]</span><br></pre></td></tr></table></figure>
-
-<p>If a submember of the data structure is an array, indent before it.</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Goldfish</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JS:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="string">'Cat'</span>, <span class="string">'Dog'</span>, <span class="string">'Goldfish'</span> ]]</span><br></pre></td></tr></table></figure>
-
-<p>Arrays can also be transfered into one-line style:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">animal:</span> <span class="string">[Cat,</span> <span class="string">Dog]</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JS:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">animal</span>: [<span class="string">'Cat'</span>, <span class="string">'Dog'</span>]&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Scalars"><a href="#Scalars" class="headerlink" title="Scalars"></a>Scalars</h3><p>Scalars are basic, unseperatable values:</p>
-<ul>
-<li>Strings</li>
-<li>Booleans</li>
-<li>Integers</li>
-<li>Floats</li>
-<li>Null</li>
-<li>Time</li>
-<li>Date</li>
-</ul>
-<h3 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h3><p>Quotes are not used by default.</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">str:</span> <span class="string">This</span> <span class="string">is</span> <span class="string">a</span> <span class="string">string.</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JavaScript:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">str</span>: <span class="string">'This is a string.'</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>But if the sting contains spaces or any special symbols, then put them in a quote:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">str:</span> <span class="string">'contents: string'</span></span><br></pre></td></tr></table></figure>
-
-<p>Strings can be splited into multiple lines. There must be an indentation from the second line.</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">str:</span> <span class="string">this</span> <span class="string">is</span> <span class="string">a</span> </span><br><span class="line">  <span class="string">multiple</span></span><br><span class="line">  <span class="string">line</span></span><br><span class="line">  <span class="string">string.</span></span><br></pre></td></tr></table></figure>
-
-<p>Equivalent in JavaScript:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">str</span>: <span class="string">'this is a  multiple  line  string.'</span>&#125;</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/22/YAML-this-and-that/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -538,7 +475,7 @@
     <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/11/20/Insights-of-Function-Objects-in-JavaScripts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar2.png">
       <meta itemprop="name" content="Cylepsy">
       <meta itemprop="description" content="">
     </span>
@@ -566,7 +503,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-15 19:51:45" itemprop="dateModified" datetime="2019-12-15T19:51:45+09:00">2019-12-15</time>
+                <time title="Modified: 2019-12-17 15:03:28" itemprop="dateModified" datetime="2019-12-17T15:03:28+09:00">2019-12-17</time>
               </span>
 
           
@@ -593,19 +530,14 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func(); <span class="comment">//calling</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  alert(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Would work normally.</p>
-<p>Therefore, even if JavaScript is an interpreted language, it still searches the whole codes for corresponding definition when a function is called. The function names are only valid when defined with <code>function funcname()</code> method, instead of anonymous functions.</p>
-<h2 id="The-hidden-argument-arguments"><a href="#The-hidden-argument-arguments" class="headerlink" title="The hidden argument: arguments"></a>The hidden argument: arguments</h2><p>When a function is being called, there’s another hidden argument created: <code>arguments</code>. It similar to an array but not one. It stores the actual arguments passed to the function, but not limited by the parameter lists defined when the function is declared.</p>
-<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">    altert(b);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++)&#123;</span><br><span class="line">        alert(<span class="built_in">arguments</span>[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">func(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<p>The result <code>1, 2, 1, 2, 3</code> would popup respectively. Therefore, when defining a function, we can access the parameters via <code>arguments</code> even if the parameter list is not specified, which brings us a lot flexibility.</p>
-<p>Another attribute of <code>arguments</code> is <em>callee</em> which indicates a reference of the function itself.</p>
-<h3 id="Example-3"><a href="#Example-3" class="headerlink" title="Example 3"></a>Example 3</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="number">1</span> ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> n + <span class="built_in">arguments</span>.callee(n<span class="number">-1</span>);</span><br><span class="line">  <span class="comment">//same as below</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> n + sum(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>While callee is not the only proof shows that <code>arguments</code> are different from <em>array</em> objects. The codes below shows <code>arguments</code> not created with <em>array</em> type.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.p1 = <span class="number">1</span>;</span><br><span class="line">alert(<span class="keyword">new</span> <span class="built_in">Array</span>().p1);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  alert(<span class="built_in">arguments</span>.p1);</span><br><span class="line">&#125;</span><br><span class="line">func();</span><br></pre></td></tr></table></figure>
-
-<p>The first <em>alert</em> shows 1, which means the array has arributes <em>p1</em>, while calling <em>func</em> shows <strong>undefined</strong>, which means <em>p1</em> is not an attribute of <code>arguments</code>. Hence <code>arguments</code> is not an array object.</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/20/Insights-of-Function-Objects-in-JavaScripts/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -627,7 +559,7 @@
     <link itemprop="mainEntityOfPage" href="https://cylepsy.github.io/2019/11/19/Practical-Vim-Skills/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar2.png">
       <meta itemprop="name" content="Cylepsy">
       <meta itemprop="description" content="">
     </span>
@@ -655,7 +587,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-15 19:51:45" itemprop="dateModified" datetime="2019-12-15T19:51:45+09:00">2019-12-15</time>
+                <time title="Modified: 2019-12-17 15:04:17" itemprop="dateModified" datetime="2019-12-17T15:04:17+09:00">2019-12-17</time>
               </span>
 
           
@@ -686,19 +618,14 @@
 <li><strong>t,T</strong> =&gt; <em>“find”</em> the next character (up to but <strong>not included</strong>)</li>
 <li><strong>/</strong> =&gt; <em>search</em> (up to the next match)</li>
 </ul>
-<h3 id="Example-‘-’-indicates-the-cursor"><a href="#Example-‘-’-indicates-the-cursor" class="headerlink" title="Example (‘|’ indicates the cursor)"></a>Example (‘|’ indicates the cursor)</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"users"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>|Users List<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Chris<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Ben<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Joe<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>How to change the contents before <em>‘List’</em>?</p>
-<blockquote>
-<p>Use <code>ctL</code> to change up to <em>‘List’</em></p>
-</blockquote>
-<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Repeat-Change"><a href="#Repeat-Change" class="headerlink" title="Repeat Change"></a>Repeat Change</h3><p>Using the <strong>dot (.)</strong> to repeat the last <em>change</em> (motion).</p>
-<h3 id="Relative-Number"><a href="#Relative-Number" class="headerlink" title="Relative Number"></a>Relative Number</h3><p>Turn on relative line numbers for easiear life.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set relativenumber</span><br></pre></td></tr></table></figure>
-
-<h3 id="Visual-Mode"><a href="#Visual-Mode" class="headerlink" title="Visual-Mode"></a>Visual-Mode</h3><p>Try <strong>not</strong> to use Visual-Mode and think if there’s a better way.</p>
-<p>(tbc in 24.19)</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/19/Practical-Vim-Skills/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -772,6 +699,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Cylepsy"
+      src="/images/avatar2.png">
   <p class="site-author-name" itemprop="name">Cylepsy</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -785,11 +714,21 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
         <span class="site-state-item-count">14</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cylepsy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cylepsy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cyrus_gao@outlook" title="E-Mail → mailto:cyrus_gao@outlook" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
