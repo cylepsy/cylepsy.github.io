@@ -40,6 +40,8 @@ function func() {
 
 Would work normally.
 
+<!-- more -->
+
 Therefore, even if JavaScript is an interpreted language, it still searches the whole codes for corresponding definition when a function is called. The function names are only valid when defined with `function funcname()` method, instead of anonymous functions.
 
 ## The hidden argument: arguments

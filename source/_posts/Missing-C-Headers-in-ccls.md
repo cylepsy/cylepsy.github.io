@@ -17,6 +17,8 @@ The first plug-in I came across was [nvimcoc](https://github.com/neoclide/coc.nv
 It is an intelliSense engine for Vim 8 and NeoVim, which can work as a Language server client.
 In a word, it makes your Vim more VS Code-ish.
 
+<!-- more -->
+
 ## ccls
 
 And ccls is a language server for linting C-Family codes.

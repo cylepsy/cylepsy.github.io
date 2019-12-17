@@ -12,6 +12,8 @@ tags:
 
 There are lots of reason to learn about using YAML. ~~Like editing the config file of this blog.~~
 
+<!-- more -->
+
 ## Basic Syntax
 
 There are three types of data structures in YAML:

@@ -24,6 +24,8 @@ Text objects allow you to operate from anywhere within a **defined body of texts
 - **t,T** => _"find"_ the next character (up to but **not included**)
 - **/** => _search_ (up to the next match)
 
+<!-- more -->
+
 ### Example ('|' indicates the cursor)
 
 ```html

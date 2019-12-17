@@ -29,6 +29,7 @@ Then run this command to generate the grub config file in `/boot` directory:
 ```bash
 grub-mkconfig grub-mkconfig -o /boot/grub/grub.cfg
 ```
+<!-- more -->
 
 These are the expected prompts:
 
