@@ -19,10 +19,26 @@ date: 2019-12-17 15:14:57
     </div>
     <div class = "album_column">
             <div class = "album_image">
+                <img src="index/zombie.png">
+            </div>
+        <h3>ZombieLand</h3>
+        <p> Lua <i class="devicon-linux-plain"> Linux </i></p>
+        <p>This is a top-down shooting game made with Love2D engine and coded in Lua. It's also compiled and ported to GameShell console running Linux evironment. The project is still under development.</p>
+    </div>
+    <div class = "album_column">
+            <div class = "album_image">
                 <img src="index/phone.png">
             </div>
         <h3>Setapp</h3>
         <p><i class="devicon-javascript-plain"> Javascript </i><i class="devicon-android-plain"> Android </i><i class="devicon-c-plain"> Particle Photon</i></p>
-        <p class = "album_intro">This is an IoT project which turns an ordinary lab into a smart lab. Users are able to control and monitor devices in the lab via apps on smartphones.</p>
+        <p>This is an IoT project which turns an ordinary lab into a smart lab. Users are able to control and monitor devices in the lab via apps on smartphones.</p>
+    </div>
+    <div class = "album_column">
+            <div class = "album_image">
+                <img src="index/zombie.png">
+            </div>
+        <h3>ZombieLand</h3>
+        <p><i class="devicon-javascript-plain"> Lua </i><i class="devicon-android-plain"> Linux </i></p>
+        <p>This is a top-down shooting game made with Love2D engine and coded in Lua. It's also compiled and ported to GameShell console. The project is still under development.</p>
     </div>
 </>

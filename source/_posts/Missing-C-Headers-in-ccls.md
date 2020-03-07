@@ -6,6 +6,7 @@ tags:
   - Language Server
   - ccls
   - coc.nvim
+	- Vim
 ---
 
 Recently I switched from _Vim_ to _NeoVim_ because some people keep telling me that Vim is bloated and yadayada.
